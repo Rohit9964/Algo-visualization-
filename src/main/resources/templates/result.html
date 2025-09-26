@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sorting Result</title>
+    <style>
+        .bars-container {
+          display: flex;
+          align-items: flex-end;
+          margin-top: 20px;
+          justify-content: flex-start;
+          overflow-x: auto;
+          border: 1px solid #ccc;
+          padding: 5px;
+          height: 320px;
+        }
+        .bar {
+          display: inline-block;
+          margin: 0 1px;
+          background-color: steelblue;
+        }
+        .metrics {
+          margin-top: 20px;
+          font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<h2 th:text="'Sorting Result: ' + ${algorithm}"></h2>
+
+<div class="metrics">
+    <p><strong>Time Taken:</strong> <span th:text="${result.timeTaken}"></span> ms</p>
+    <p><strong>Comparisons:</strong> <span th:text="${result.comparisons}"></span></p>
+    <p><strong>Swaps:</strong> <span th:text="${result.swaps}"></span></p>
+</div>
+
+<h3>Sorting Animation:</h3>
+<div id="bars" class="bars-container"></div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const steps = [[${result.steps}]];
+
+    function renderBars(arr) {
+        const container = document.getElementById("bars");
+        container.innerHTML = "";
+
+        const maxWidth = 1000;
+        const barWidth = Math.max(1, Math.floor(maxWidth / arr.length));
+        const maxVal = Math.max(...arr);
+
+        arr.forEach(val => {
+            const bar = document.createElement("div");
+            bar.classList.add("bar");
+            bar.style.width = barWidth + "px";
+            bar.style.height = ((val / maxVal) * 300) + "px";
+            container.appendChild(bar);
+        });
+    }
+
+    async function animate() {
+        for (let step of steps) {
+            renderBars(step);
+            await new Promise(res => setTimeout(res, 200));
+        }
+    }
+
+    window.onload = animate;
+    /*]]>*/
+</script>
+</body>
+</html>

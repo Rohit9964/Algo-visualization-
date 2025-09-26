@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Searching</title></head>
+<body>
+<h2>Searching Visualizer</h2>
+<form action="/search" method="post">
+  <label>Algorithm:</label>
+  <select name="algorithm">
+    <option value="linear">Linear Search</option>
+    <option value="binary">Binary Search</option>
+  </select>
+  <br><br>
+  <label>Array Size:</label>
+  <input type="number" name="size" value="20" min="5" max="5000">
+  <br><br>
+  <label>Target Value:</label>
+  <input type="number" name="target" required>
+  <br><br>
+  <button type="submit">Visualize</button>
+</form>
+</body>
+</html>

@@ -1,7 +1,7 @@
 package com.DSAproject.DSAproject.controllers;
 
 import com.DSAproject.DSAproject.DTO.SortResult;
-import com.DSAproject.DSAproject.service.SortingService;
+import com.DSAproject.DSAproject.services.SortingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

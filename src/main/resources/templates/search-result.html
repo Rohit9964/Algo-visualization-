@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Search Result</title>
+  <style>
+    .bars-container {
+      display: flex;
+      align-items: flex-end;
+      margin-top: 20px;
+      justify-content: flex-start;
+      overflow-x: auto;
+      border: 1px solid #ccc;
+      padding: 5px;
+      height: 320px;
+    }
+    .bar {
+      display: inline-block;
+      margin: 0 1px;
+      background-color: steelblue;
+    }
+    .bar.highlight {
+      background-color: crimson; /* red for checked element */
+    }
+    .metrics {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+<h2 th:text="'Search Result: ' + ${algorithm}"></h2>
+
+<div class="metrics">
+  <p><strong>Time Taken:</strong> <span th:text="${result.timeTaken}"></span> ms</p>
+  <p><strong>Comparisons:</strong> <span th:text="${result.comparisons}"></span></p>
+  <p><strong>Swaps:</strong> <span th:text="${result.swaps}"></span></p>
+  <p>
+    <strong>Result:</strong>
+    <span th:if="${result.foundIndex != -1}" th:text="'Found at index ' + ${result.foundIndex}"></span>
+    <span th:if="${result.foundIndex == -1}">Target Not Found</span>
+  </p>
+</div>
+
+<h3>Search Animation:</h3>
+<div id="bars" class="bars-container"></div>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  const steps = [[${result.steps}]];
+
+  function renderBars(arr) {
+      const container = document.getElementById("bars");
+      container.innerHTML = "";
+
+      const maxWidth = 1000;
+      const barWidth = Math.max(1, Math.floor(maxWidth / arr.length));
+      const maxVal = Math.max(...arr.map(v => Math.abs(v)));
+
+      arr.forEach(val => {
+          const bar = document.createElement("div");
+          bar.classList.add("bar");
+          bar.style.width = barWidth + "px";
+          bar.style.height = ((Math.abs(val) / maxVal) * 300) + "px";
+
+          if (val < 0) {
+              bar.classList.add("highlight");
+          }
+          container.appendChild(bar);
+      });
+  }
+
+  async function animate() {
+      for (let step of steps) {
+          renderBars(step);
+          await new Promise(res => setTimeout(res, 600));
+      }
+  }
+
+  window.onload = animate;
+  /*]]>*/
+</script>
+</body>
+</html>

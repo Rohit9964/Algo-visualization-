@@ -1,7 +1,7 @@
 package com.DSAproject.DSAproject.controllers;
 
 import com.DSAproject.DSAproject.DTO.SearchResult;
-import com.DSAproject.DSAproject.service.SearchingService;
+import com.DSAproject.DSAproject.services.SearchingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

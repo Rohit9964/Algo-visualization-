@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Sorting</title></head>
+<body>
+<h2>Sorting Visualizer</h2>
+<form action="/sort" method="post">
+    <label>Algorithm:</label>
+    <select name="algorithm">
+        <option value="bubble">Bubble Sort</option>
+        <option value="insertion">Insertion Sort</option>
+        <option value="selection">Selection Sort</option>
+        <option value="merge">Merge Sort</option>
+        <option value="quick">Quick Sort</option>
+        <option value="heap">Heap Sort</option>
+    </select>
+    <br><br>
+    <label>Array Size:</label>
+    <input type="number" name="size" value="20" min="5" max="5000">
+    <br><br>
+    <button type="submit">Visualize</button>
+</form>
+</body>
+</html>
