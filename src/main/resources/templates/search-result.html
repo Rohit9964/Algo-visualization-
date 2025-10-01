@@ -1,29 +1,70 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search Result</title>
   <style>
-    .bars-container {
-      display: flex;
-      align-items: flex-end;
-      margin-top: 20px;
-      justify-content: flex-start;
-      overflow-x: auto;
-      border: 1px solid #ccc;
-      padding: 5px;
-      height: 320px;
+    body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f5f7fa;
+        margin: 0;
+        padding: 2rem;
     }
-    .bar {
-      display: inline-block;
-      margin: 0 1px;
-      background-color: steelblue;
-    }
-    .bar.highlight {
-      background-color: crimson; /* red for checked element */
+    h2 {
+        color: #2c3e50;
+        margin-bottom: 1rem;
     }
     .metrics {
-      margin-top: 20px;
-      font-size: 18px;
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 1.2rem;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        max-width: 400px;
+        margin-bottom: 2rem;
+    }
+    .metrics p {
+        margin: 0.6rem 0;
+        font-size: 1rem;
+        color: #34495e;
+    }
+    .metrics strong {
+        color: #2c3e50;
+    }
+    .bars-container {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 6px;
+        overflow-x: auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 8px;
+        height: 350px;
+        background: #fff;
+    }
+    .bar {
+        display: inline-block;
+        background-color: steelblue;
+        border-radius: 3px;
+    }
+    .bar.highlight {
+        background-color: crimson; /* red for checked element */
+    }
+    .bar-label {
+        font-size: 12px;
+        color: #2c3e50;
+        margin-bottom: 4px;
+        text-align: center;
+    }
+    .bar-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    h3 {
+        margin-top: 2rem;
+        color: #2c3e50;
     }
   </style>
 </head>
@@ -53,19 +94,32 @@
       container.innerHTML = "";
 
       const maxWidth = 1000;
-      const barWidth = Math.max(1, Math.floor(maxWidth / arr.length));
+      const barWidth = Math.max(20, Math.floor(maxWidth / arr.length));
       const maxVal = Math.max(...arr.map(v => Math.abs(v)));
 
       arr.forEach(val => {
+          const wrapper = document.createElement("div");
+          wrapper.classList.add("bar-wrapper");
+          wrapper.style.width = barWidth + "px";
+
+          // Label above the bar
+          const label = document.createElement("div");
+          label.classList.add("bar-label");
+          label.textContent = Math.abs(val);
+
+          // Bar
           const bar = document.createElement("div");
           bar.classList.add("bar");
-          bar.style.width = barWidth + "px";
+          bar.style.width = "100%";
           bar.style.height = ((Math.abs(val) / maxVal) * 300) + "px";
 
           if (val < 0) {
               bar.classList.add("highlight");
           }
-          container.appendChild(bar);
+
+          wrapper.appendChild(label);
+          wrapper.appendChild(bar);
+          container.appendChild(wrapper);
       });
   }
 
