@@ -12,6 +12,7 @@ public class BubbleSort {
         steps.add(Arrays.copyOf(arr, n));
 
         for (int i = 0; i < n - 1; i++) {
+            boolean flag = false;
             for (int j = 0; j < n - i - 1; j++) {
                 comparisons++;
                 if (arr[j] > arr[j + 1]) {
@@ -20,8 +21,10 @@ public class BubbleSort {
                     arr[j + 1] = temp;
                     swaps++;
                     steps.add(Arrays.copyOf(arr, n));
+                    flag = true;
                 }
             }
+            if(!flag) break;
         }
 
         long end = System.currentTimeMillis();
